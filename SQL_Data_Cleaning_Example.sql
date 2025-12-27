@@ -1,6 +1,5 @@
 -- Data cleaning
 
-
 SELECT *
 FROM layoffs
 
@@ -165,7 +164,7 @@ AND percentage_laid_off IS NULL;
 SELECT *
 FROM layoffs_staging2;
 
--- 4 Remove any columns
+-- 4 Remove any redundant columns
 
 ALTER TABLE layoffs_staging2
   DROP COLUMN row_num;
