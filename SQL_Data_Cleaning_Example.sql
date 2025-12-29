@@ -31,8 +31,6 @@ SELECT * FROM world_layoffs.layoffs;
 
 -- 1. Remove Duplicates
 
-# First let's check for duplicates
-
 
 
 SELECT *
@@ -79,9 +77,8 @@ FROM (
 WHERE 
 	row_num > 1;
 
--- these are the ones we want to delete where the row number is > 1 or 2or greater essentially
+-- these are the ones we want to delete where the row number is > 1 
 
--- now you may want to write it like this:
 WITH DELETE_CTE AS 
 (
 SELECT *
@@ -112,8 +109,7 @@ WHERE (company, location, industry, total_laid_off, percentage_laid_off, `date`,
 	FROM DELETE_CTE
 ) AND row_num > 1;
 
--- one solution, which I think is a good one. Is to create a new column and add those row numbers in. Then delete where row numbers are over 2, then delete that column
--- so let's do it!!
+-- I decided to create a new column and add those row numbers in. Then delete where row numbers are over 2, then delete that column
 
 ALTER TABLE world_layoffs.layoffs_staging ADD row_num INT;
 
@@ -169,15 +165,12 @@ WHERE row_num >= 2;
 
 
 
-
-
-
 -- 2. Standardize Data
 
 SELECT * 
 FROM world_layoffs.layoffs_staging2;
 
--- if we look at industry it looks like we have some null and empty rows, let's take a look at these
+-- if we look at industry it looks like we have some null and empty rows.
 SELECT DISTINCT industry
 FROM world_layoffs.layoffs_staging2
 ORDER BY industry;
